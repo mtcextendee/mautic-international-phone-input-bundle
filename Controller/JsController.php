@@ -49,7 +49,9 @@ class JsController extends CommonController
     public function generateCountryCodeAction($formName)
     {
         $ip       = $this->ipLookupHelper->getIpAddress();
+        include_once __DIR__.'/../countries.php';
         $country  = ArrayHelper::getValue('country', $ip->getIpDetails());
+        $countryCode = array_search(strtolower($country), array_map('strtolower', $countries)); ## easy version
         $realFormName = ltrim($formName, '_');
         $utilsUrl = $this->assetsHelper->getUrl('plugins/MauticInternationalPhoneInputBundle/Assets/js/utils.js');
         $js       = <<<JS
@@ -62,7 +64,7 @@ class JsController extends CommonController
       window.intlTelInput(elem , {
             hiddenInput: elem.getAttribute('data-field-alias')+'_full',
             separateDialCode: true,
-          initialCountry: "{$country}",
+          initialCountry: "{$countryCode}",
           utilsScript: "{$utilsUrl}"
      });
       window.{$formName} = true;
