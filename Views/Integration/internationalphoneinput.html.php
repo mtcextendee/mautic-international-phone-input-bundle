@@ -12,6 +12,8 @@ $containerType     = (isset($type)) ? $type : 'text';
 $defaultInputClass = (isset($inputClass)) ? $inputClass : 'input';
 include __DIR__.'/../../../../app/bundles/FormBundle/Views/Field/field_helper.php';
 
+$formName= !empty($formName) ? $formName : 'preview';
+
 $input = $view->render(
     'MauticFormBundle:Field:text.html.php',
     [
@@ -27,6 +29,7 @@ $input = $view->render(
 echo str_replace('<input', '<input data-field-alias="'.$field['alias'].'"', $input);
 
 $elementId = 'mauticform_input'.$formName.'_'.$field['alias'];
+
 echo <<<HTML
 <link rel="stylesheet" href="{$view['assets']->getUrl(
     'plugins/MauticInternationalPhoneInputBundle/Assets/css/intlTelInput.min.css'
