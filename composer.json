@@ -1,6 +1,6 @@
 {
-    "name": "koco/mautic-internationalphoneinput-bundle",
-    "description": "This plugin brings International Phone Input integration to mautic.",
+    "name": "mtcextendee/mautic-international-phone-input-bundle",
+    "description": "This plugin brings International Phone Input integration to Mautic.",
     "type": "mautic-plugin",
     "require": {
         "mautic/composer-plugin": "^1.0"
@@ -8,8 +8,8 @@
     "license": "GPL-3.0-only",
     "authors": [
         {
-            "name": "Konstantin Scheumann",
-            "email": "info@konstantin.codes"
+            "name": "Zdeno Kuzmany",
+            "email": "zdeno@kuzmany.biz"
         }
     ]
 }

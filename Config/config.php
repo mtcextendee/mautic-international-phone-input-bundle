@@ -4,7 +4,7 @@ return [
     'name'        => 'International Phone Input',
     'description' => 'Enables International Phone Input integration.',
     'version'     => '1.0',
-    'author'      => 'Konstantin Scheumann',
+    'author'      => 'MTCExtendee',
 
     'routes' => [
         'public' => [
