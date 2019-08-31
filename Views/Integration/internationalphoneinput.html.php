@@ -32,9 +32,9 @@ $elementId = 'mauticform_input'.$formName.'_'.$field['alias'];
 
 echo <<<HTML
 <link rel="stylesheet" href="{$view['assets']->getUrl(
-    'plugins/MauticInternationalPhoneInputBundle/Assets/css/intlTelInput.min.css'
+    'plugins/MauticInternationalPhoneInputBundle/Assets/css/intlTelInput.min.css', null, null, true
 )}">
-<script src="{$view['assets']->getUrl('plugins/MauticInternationalPhoneInputBundle/Assets/js/intlTelInput.min.js')}"></script>
+<script src="{$view['assets']->getUrl('plugins/MauticInternationalPhoneInputBundle/Assets/js/intlTelInput.min.js', null, null, true)}"></script>
 <script async defer src="{$view['router']->generate(
     'mautic_country_code_generate',
     ['formName' => $formName],
