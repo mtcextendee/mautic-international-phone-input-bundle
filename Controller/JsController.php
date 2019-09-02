@@ -53,7 +53,8 @@ class JsController extends CommonController
         $country  = ArrayHelper::getValue('country', $ip->getIpDetails());
         $countryCode = array_search(strtolower($country), array_map('strtolower', $countries)); ## easy version
         $realFormName = ltrim($formName, '_');
-        $utilsUrl = $this->assetsHelper->getUrl('plugins/MauticInternationalPhoneInputBundle/Assets/js/utils.js');
+        $utilsUrl = $this->assetsHelper->getUrl('plugins/MauticInternationalPhoneInputBundle/Assets/js/utils.js', null, null, true
+        );
         $js       = <<<JS
         if(!window.{$formName}){
        var elems = document.getElementsByClassName('inttel{$formName}');
