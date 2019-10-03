@@ -48,7 +48,7 @@ class FormSubscriber extends CommonSubscriber
         IntegrationHelper $integrationHelper
     ) {
         $integrationObject     = $integrationHelper->getIntegrationObject(InternationalPhoneInputIntegration::INTEGRATION_NAME);
-        if ($integrationObject instanceof AbstractIntegration) {
+        if ($integrationObject instanceof AbstractIntegration && $integrationObject->getIntegrationSettings()->getIsPublished()) {
                 $this->internationalphoneinputIsConfigured = true;
         }
     }
