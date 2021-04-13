@@ -7,13 +7,16 @@ This plugin brings International phone input to Mauti forms http://intl-tel-inpu
 ### Console
 
 1. `composer require mtcextendee/mautic-international-phone-input-bundle`
-2. `php app/console mautic:plugins:reload`
+2. `php bin/console mautic:plugins:reload`
 
 ### Manual
 
 1, Download last version https://github.com/mtcextendee/mautic-international-phone-input-bundle
+
 2, Unzip files to plugins/MauticInternationalPhoneInputBundle
-3, Clear cache (app/cache/prod/)
+
+3, Clear cache (va/cache/prod/)
+
 4, Go to /s/plugins/reload
 
 ## Usage
