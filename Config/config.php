@@ -25,10 +25,10 @@ return [
             ],
             'mautic.form.validation.inttel.subscriber' => [
                 'class'     => \MauticPlugin\MauticInternationalPhoneInputBundle\EventListener\FormValidationSubscriber::class,
-                'arguments' =>  [
+                'arguments' => [
                     'translator',
-                    'request_stack'
-                ]
+                    'request_stack',
+                ],
             ],
         ],
         'forms' => [
@@ -38,7 +38,6 @@ return [
             ],
         ],
         'models' => [
-
         ],
         'integrations' => [
             'mautic.integration.internationalphoneinput' => [
@@ -74,6 +73,5 @@ return [
         ],
     ],
     'parameters' => [
-
     ],
 ];

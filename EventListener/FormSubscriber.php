@@ -34,19 +34,16 @@ class FormSubscriber implements EventSubscriberInterface
     protected $secretKey;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $internationalphoneinputIsConfigured = false;
 
-    /**
-     * @param IntegrationHelper $integrationHelper
-     */
     public function __construct(
         IntegrationHelper $integrationHelper
     ) {
         $integrationObject     = $integrationHelper->getIntegrationObject(InternationalPhoneInputIntegration::INTEGRATION_NAME);
         if ($integrationObject instanceof AbstractIntegration && $integrationObject->getIntegrationSettings()->getIsPublished()) {
-                $this->internationalphoneinputIsConfigured = true;
+            $this->internationalphoneinputIsConfigured = true;
         }
     }
 
@@ -56,14 +53,11 @@ class FormSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            FormEvents::FORM_ON_BUILD         => ['onFormBuild', 0],
+            FormEvents::FORM_ON_BUILD                       => ['onFormBuild', 0],
             InternationalPhoneInputEvents::ON_FORM_VALIDATE => ['onFormValidate', 0],
         ];
     }
 
-    /**
-     * @param FormBuilderEvent $event
-     */
     public function onFormBuild(FormBuilderEvent $event)
     {
         if (!$this->internationalphoneinputIsConfigured) {
@@ -71,11 +65,10 @@ class FormSubscriber implements EventSubscriberInterface
         }
         $event->addFormField(self::FIELD_NAME, [
             'label'          => 'mautic.plugin.actions.internationalphoneinput',
-            'formType'       =>  InternationalPhoneInputType::class,
+            'formType'       => InternationalPhoneInputType::class,
             'template'       => 'MauticInternationalPhoneInputBundle:Integration:internationalphoneinput.html.php',
             'builderOptions' => [
             ],
         ]);
-
     }
 }

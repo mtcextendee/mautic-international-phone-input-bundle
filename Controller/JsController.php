@@ -31,9 +31,6 @@ class JsController extends CommonController
 
     /**
      * PublicController constructor.
-     *
-     * @param IpLookupHelper $ipLookupHelper
-     * @param AssetsHelper   $assetsHelper
      */
     public function __construct(IpLookupHelper $ipLookupHelper, AssetsHelper $assetsHelper)
     {
@@ -50,10 +47,10 @@ class JsController extends CommonController
     {
         $ip       = $this->ipLookupHelper->getIpAddress();
         include_once __DIR__.'/../countries.php';
-        $country  = ArrayHelper::getValue('country', $ip->getIpDetails() ?? []);
-        $countryCode = array_search(strtolower($country), array_map('strtolower', $countries)); ## easy version
+        $country      = ArrayHelper::getValue('country', $ip->getIpDetails() ?? []);
+        $countryCode  = array_search(strtolower($country), array_map('strtolower', $countries)); //# easy version
         $realFormName = ltrim($formName, '_');
-        $utilsUrl = $this->assetsHelper->getUrl('plugins/MauticInternationalPhoneInputBundle/Assets/lib/js/utils.js', null, null, true
+        $utilsUrl     = $this->assetsHelper->getUrl('plugins/MauticInternationalPhoneInputBundle/Assets/lib/js/utils.js', null, null, true
         );
         $js       = <<<JS
         if(!window.{$formName}){

@@ -29,7 +29,7 @@ $input = $view->render(
 echo str_replace('<input', '<input data-field-alias="'.$field['alias'].'"', $input);
     $elementId = 'mauticform_input'.$formName.'_'.$field['alias'];
 
-if(!$inBuilder) {
+if (!$inBuilder) {
     echo <<<HTML
 <link rel="stylesheet" href="{$view['assets']->getUrl(
         'plugins/MauticInternationalPhoneInputBundle/Assets/lib/css/intlTelInput.min.css',

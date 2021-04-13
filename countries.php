@@ -8,8 +8,7 @@
  *
  * Do not modify this file directly!
  */
-
-$countries = array (
+$countries = [
   'AC' => 'Ascension Island',
   'AD' => 'Andorra',
   'AE' => 'United Arab Emirates',
@@ -263,4 +262,4 @@ $countries = array (
   'ZA' => 'South Africa',
   'ZM' => 'Zambia',
   'ZW' => 'Zimbabwe',
-);
+];

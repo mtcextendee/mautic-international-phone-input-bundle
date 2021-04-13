@@ -23,7 +23,6 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class FormValidationSubscriber implements EventSubscriberInterface
 {
-
     /**
      * @var TranslatorInterface
      */
@@ -37,9 +36,8 @@ class FormValidationSubscriber implements EventSubscriberInterface
     public function __construct(TranslatorInterface $translator, RequestStack $requestStack)
     {
         $this->translator = $translator;
-        $this->request = $requestStack->getCurrentRequest();
+        $this->request    = $requestStack->getCurrentRequest();
     }
-
 
     /**
      * {@inheritdoc}
@@ -54,8 +52,6 @@ class FormValidationSubscriber implements EventSubscriberInterface
 
     /**
      * Add a simple email form.
-     *
-     * @param Events\FormBuilderEvent $event
      */
     public function onFormBuilder(Events\FormBuilderEvent $event)
     {
@@ -71,15 +67,13 @@ class FormValidationSubscriber implements EventSubscriberInterface
 
     /**
      * Custom validation     *.
-     *
-     *@param Events\ValidationEvent $event
      */
     public function onFormValidate(Events\ValidationEvent $event)
     {
-        $field = $event->getField();
-        $phoneNumber = $event->getValue();
+        $field           = $event->getField();
+        $phoneNumber     = $event->getValue();
         $fullPhoneNumber = ArrayHelper::getValue($field->getAlias(), $this->request ? $this->request->request->get('mauticform') : []);
-        if (!empty($phoneNumber) && $field->getType() === FormSubscriber::FIELD_NAME && !empty($field->getValidation()['international'])) {
+        if (!empty($phoneNumber) && FormSubscriber::FIELD_NAME === $field->getType() && !empty($field->getValidation()['international'])) {
             $phoneUtil = PhoneNumberUtil::getInstance();
             try {
                 $parsedPhone = $phoneUtil->parse($fullPhoneNumber, PhoneNumberUtil::UNKNOWN_REGION);
@@ -92,9 +86,6 @@ class FormValidationSubscriber implements EventSubscriberInterface
         }
     }
 
-    /**
-     * @param Events\ValidationEvent $event
-     */
     private function setFailedValidation(Events\ValidationEvent $event)
     {
         $field = $event->getField();
