@@ -13,18 +13,15 @@ use Mautic\FormBundle\Event\FormBuilderEvent;
 use Mautic\FormBundle\FormEvents;
 use Mautic\PluginBundle\Helper\IntegrationHelper;
 use Mautic\PluginBundle\Integration\AbstractIntegration;
+use MauticPlugin\MauticInternationalPhoneInputBundle\Form\Type\InternationalPhoneInputType;
 use MauticPlugin\MauticInternationalPhoneInputBundle\Integration\InternationalPhoneInputIntegration;
 use MauticPlugin\MauticInternationalPhoneInputBundle\InternationalPhoneInputEvents;
 use MauticPlugin\MauticInternationalPhoneInputBundle\Service\InternationalPhoneInputClient;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class FormSubscriber extends CommonSubscriber
+class FormSubscriber implements EventSubscriberInterface
 {
     const FIELD_NAME = 'plugin.internationalphoneinput';
-
-    /**
-     * @var InternationalPhoneInputClient
-     */
-    protected $internationalphoneinputClient;
 
     /**
      * @var string
@@ -74,7 +71,7 @@ class FormSubscriber extends CommonSubscriber
         }
         $event->addFormField(self::FIELD_NAME, [
             'label'          => 'mautic.plugin.actions.internationalphoneinput',
-            'formType'       =>  'internationalphoneinput',
+            'formType'       =>  InternationalPhoneInputType::class,
             'template'       => 'MauticInternationalPhoneInputBundle:Integration:internationalphoneinput.html.php',
             'builderOptions' => [
             ],

@@ -17,9 +17,29 @@ use Mautic\CoreBundle\EventListener\CommonSubscriber;
 use Mautic\CoreBundle\Helper\ArrayHelper;
 use Mautic\FormBundle\Event as Events;
 use Mautic\FormBundle\FormEvents;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Translation\TranslatorInterface;
 
-class FormValidationSubscriber extends CommonSubscriber
+class FormValidationSubscriber implements EventSubscriberInterface
 {
+
+    /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
+    /**
+     * @var \Symfony\Component\HttpFoundation\Request|null
+     */
+    private $request;
+
+    public function __construct(TranslatorInterface $translator, RequestStack $requestStack)
+    {
+        $this->translator = $translator;
+        $this->request = $requestStack->getCurrentRequest();
+    }
+
 
     /**
      * {@inheritdoc}
@@ -58,7 +78,7 @@ class FormValidationSubscriber extends CommonSubscriber
     {
         $field = $event->getField();
         $phoneNumber = $event->getValue();
-        $fullPhoneNumber = ArrayHelper::getValue($field->getAlias().'_full', $this->request->request->get('mauticform'));
+        $fullPhoneNumber = ArrayHelper::getValue($field->getAlias(), $this->request ? $this->request->request->get('mauticform') : []);
         if (!empty($phoneNumber) && $field->getType() === FormSubscriber::FIELD_NAME && !empty($field->getValidation()['international'])) {
             $phoneUtil = PhoneNumberUtil::getInstance();
             try {

@@ -32,18 +32,18 @@ echo str_replace('<input', '<input data-field-alias="'.$field['alias'].'"', $inp
 if(!$inBuilder) {
     echo <<<HTML
 <link rel="stylesheet" href="{$view['assets']->getUrl(
-        'plugins/MauticInternationalPhoneInputBundle/Assets/css/intlTelInput.min.css',
+        'plugins/MauticInternationalPhoneInputBundle/Assets/lib/css/intlTelInput.min.css',
         null,
         null,
         true
     )}">
 <script src="{$view['assets']->getUrl(
-        'plugins/MauticInternationalPhoneInputBundle/Assets/js/intlTelInput.min.js',
+        'plugins/MauticInternationalPhoneInputBundle/Assets/lib/js/intlTelInput.min.js',
         null,
         null,
         true
     )}"></script>
-<script async defer src="{$view['router']->generate(
+<script async defer src="{$view['router']->url(
         'mautic_country_code_generate',
         ['formName' => $formName],
         true

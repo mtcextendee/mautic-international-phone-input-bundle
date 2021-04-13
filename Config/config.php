@@ -25,7 +25,10 @@ return [
             ],
             'mautic.form.validation.inttel.subscriber' => [
                 'class'     => \MauticPlugin\MauticInternationalPhoneInputBundle\EventListener\FormValidationSubscriber::class,
-                'arguments' =>  []
+                'arguments' =>  [
+                    'translator',
+                    'request_stack'
+                ]
             ],
         ],
         'forms' => [
@@ -41,6 +44,22 @@ return [
             'mautic.integration.internationalphoneinput' => [
                 'class'     => \MauticPlugin\MauticInternationalPhoneInputBundle\Integration\InternationalPhoneInputIntegration::class,
                 'arguments' => [
+                    'event_dispatcher',
+                    'mautic.helper.cache_storage',
+                    'doctrine.orm.entity_manager',
+                    'session',
+                    'request_stack',
+                    'router',
+                    'translator',
+                    'monolog.logger.mautic',
+                    'mautic.helper.encryption',
+                    'mautic.lead.model.lead',
+                    'mautic.lead.model.company',
+                    'mautic.helper.paths',
+                    'mautic.core.model.notification',
+                    'mautic.lead.model.field',
+                    'mautic.plugin.model.integration_entity',
+                    'mautic.lead.model.dnc',
                 ],
             ],
         ],
