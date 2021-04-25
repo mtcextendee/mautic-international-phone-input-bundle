@@ -17,6 +17,7 @@ use Mautic\CoreBundle\EventListener\CommonSubscriber;
 use Mautic\CoreBundle\Helper\ArrayHelper;
 use Mautic\FormBundle\Event as Events;
 use Mautic\FormBundle\FormEvents;
+use Mautic\LeadBundle\Model\LeadModel;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -33,10 +34,16 @@ class FormValidationSubscriber implements EventSubscriberInterface
      */
     private $request;
 
-    public function __construct(TranslatorInterface $translator, RequestStack $requestStack)
+    /**
+     * @var LeadModel
+     */
+    private $leadModel;
+
+    public function __construct(TranslatorInterface $translator, RequestStack $requestStack, LeadModel $leadModel)
     {
         $this->translator = $translator;
         $this->request    = $requestStack->getCurrentRequest();
+        $this->leadModel = $leadModel;
     }
 
     /**
@@ -45,8 +52,9 @@ class FormValidationSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            FormEvents::FORM_ON_BUILD                => ['onFormBuilder', 0],
-            FormEvents::ON_FORM_VALIDATE             => ['onFormValidate', 0],
+            FormEvents::FORM_ON_BUILD    => ['onFormBuilder', 0],
+            FormEvents::ON_FORM_VALIDATE => ['onFormValidate', 0],
+            FormEvents::FORM_ON_SUBMIT   => ['onFormSubmit', 0],
         ];
     }
 
@@ -65,6 +73,27 @@ class FormValidationSubscriber implements EventSubscriberInterface
         );
     }
 
+    public function onFormSubmit(Events\SubmissionEvent $submissionEvent)
+    {
+        if (!$contact = $submissionEvent->getLead()) {
+            return;
+        }
+
+        $fields = $submissionEvent->getForm()->getFields();
+
+        foreach ($fields as $field) {
+            if (FormSubscriber::FIELD_NAME === $field->getType() && $field->getLeadField()) {
+                if($fullPhoneNumber = ArrayHelper::getValue($field->getAlias().'_full', $this->request ? $this->request->request->get('mauticform') : [])) {
+                    $this->leadModel->setFieldValues($contact, [$field->getLeadField() => $fullPhoneNumber]);
+                }
+            }
+        }
+
+        if (!empty($contact->getChanges())) {
+            $this->leadModel->saveEntity($contact);
+        }
+    }
+
     /**
      * Custom validation     *.
      */
@@ -72,7 +101,7 @@ class FormValidationSubscriber implements EventSubscriberInterface
     {
         $field           = $event->getField();
         $phoneNumber     = $event->getValue();
-        $fullPhoneNumber = ArrayHelper::getValue($field->getAlias(), $this->request ? $this->request->request->get('mauticform') : []);
+        $fullPhoneNumber = ArrayHelper::getValue($field->getAlias().'_full', $this->request ? $this->request->request->get('mauticform') : []);
         if (!empty($phoneNumber) && FormSubscriber::FIELD_NAME === $field->getType() && !empty($field->getValidation()['international'])) {
             $phoneUtil = PhoneNumberUtil::getInstance();
             try {

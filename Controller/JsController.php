@@ -60,7 +60,7 @@ class JsController extends CommonController
                var elem = elems[i];
 
       window.intlTelInput(elem , {
-            hiddenInput: elem.getAttribute('data-field-alias'),
+            hiddenInput: elem.getAttribute('data-field-alias')+'_full',
             separateDialCode: true,
           initialCountry: "{$countryCode}",
           utilsScript: "{$utilsUrl}"

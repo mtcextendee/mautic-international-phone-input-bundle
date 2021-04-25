@@ -28,6 +28,7 @@ return [
                 'arguments' => [
                     'translator',
                     'request_stack',
+                    'mautic.lead.model.lead'
                 ],
             ],
         ],
