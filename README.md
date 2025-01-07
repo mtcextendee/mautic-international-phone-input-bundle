@@ -1,10 +1,10 @@
 # Mautic International Phone Input Plugin
 
+This plugin brings International phone input to Mauti forms http://intl-tel-input.com
+
 ## Mautic 5 Compatible Version
 
 Contact https://xgeeksweb.com/ to obtain a Mautic 5 compatible version with support
-
-This plugin brings International phone input to Mauti forms http://intl-tel-input.com
 
 ## Installation
 
